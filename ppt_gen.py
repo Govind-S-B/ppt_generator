@@ -1,4 +1,8 @@
 from pptx import Presentation
+from pptx.util import Pt
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+
 
 ppt = Presentation()
 
@@ -68,6 +72,16 @@ slide_data = [
      "Uphold professional standards and codes of ethics.",
      "Be open to feedback and continuous learning."],
 ]
+
+slide_master = ppt.slide_master
+slide_master.background.fill.solid()
+slide_master.background.fill.fore_color.rgb = RGBColor(0, 0, 0)
+
+# creating the slide object to add in PPT file
+mySlide = ppt.slides.add_slide(ppt.slide_layouts[0])
+mySlide.shapes.title.text = "Hey There"
+mySlide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
+    255, 255, 255)
 
 ppt.save(f"{slide_data[0][0]}.pptx")
 print("done")
