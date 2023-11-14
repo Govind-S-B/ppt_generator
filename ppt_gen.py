@@ -77,11 +77,32 @@ slide_master = ppt.slide_master
 slide_master.background.fill.solid()
 slide_master.background.fill.fore_color.rgb = RGBColor(0, 0, 0)
 
-# creating the slide object to add in PPT file
-mySlide = ppt.slides.add_slide(ppt.slide_layouts[0])
-mySlide.shapes.title.text = "Hey There"
-mySlide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
+# Title Screen
+curr_slide = ppt.slides.add_slide(ppt.slide_layouts[0])
+curr_slide.shapes.title.text = slide_data[0][0]
+curr_slide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
     255, 255, 255)
+curr_slide.shapes.placeholders[1].text = slide_data[0][1]
+curr_slide.shapes.placeholders[1].text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
+    255, 255, 255)
+
+# Overview
+curr_slide = ppt.slides.add_slide(ppt.slide_layouts[1])
+curr_slide.shapes.title.text = slide_data[1][0]
+curr_slide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
+    255, 255, 255)
+for content in slide_data[1][1:]:
+    tframe = curr_slide.shapes.placeholders[1].text_frame
+    para = tframe.add_paragraph()
+    para.text = content
+    para.level = 1
+    para.runs[0].font.color.rgb = RGBColor(
+        255, 255, 255)
+
+# for curr_slide_data in slide_data[1:]:
+#     curr_slide = ppt.slides.add_slide(ppt.slide_layouts[1])
+#     curr_slide.shapes.title = curr_slide_data[0]
+
 
 ppt.save(f"{slide_data[0][0]}.pptx")
 print("done")
