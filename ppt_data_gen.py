@@ -72,3 +72,30 @@ slide_data = [
 # Iterate over TOC , for each sub topic given the topic title and subtitle , generate 5 points or sentences , each of 100 characters in length
 
 # Format at each step to proper list
+
+import re
+from langchain.llms import Ollama
+from langchain.prompts import PromptTemplate
+
+llm = Ollama(model="dolphin2.1-mistral",
+             temperature="0.6")
+
+llm_low_temp = Ollama(model="dolphin2.1-mistral",
+                      temperature="0")
+
+
+def extract_items(text):
+    pattern = r'<<\s*"([^"]+)"\s*\|\s*"([^"]+)"\s*>>'
+    matches = re.findall(pattern, text)
+    return [item for match in matches for item in match]
+
+
+print(extract_items(llm("""
+You are a text summarization and formatting specialized model that fetches relevant information
+
+For the topic "Ethics in Business" suggest a presentation title and a presentation subtitle it should be returned in the format :
+<< "title" | "subtitle >>
+
+example :
+<< "Ethics in Design" | "Integrating Ethics into Design Processes" >>
+""")))
