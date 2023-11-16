@@ -76,6 +76,3 @@ def slide_data_gen(topic):
         slide_data.append([subtopic] + extract_items(cleaned_data))
 
     return slide_data
-
-
-print(slide_data_gen("Creativity in Engineering"))
