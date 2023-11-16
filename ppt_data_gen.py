@@ -26,6 +26,8 @@ def slide_data_gen(topic):
 
     slide_data = []
 
+    point_count = 3
+
     slide_data.append(extract_items(llm(f"""
     You are a text summarization and formatting specialized model that fetches relevant information
 
@@ -55,13 +57,13 @@ def slide_data_gen(topic):
                 
         For the presentation titled "{slide_data[0][0]}" and with subtitle "{slide_data[0][1]}" for the topic "{topic}"
         Write the contents for a slide with the subtopic {subtopic}
-        Write 5 points. Each point 10 words maximum.
+        Write {point_count} points. Each point 10 words maximum.
         Make the points short, concise and to the point.
             """)
 
         cleaned_data = llm(f"""
         You are a text summarization and formatting specialized model that fetches relevant information and formats it into user specified formats
-        Given below is a text draft for a presentation slide containing 5 points , extract the 5 sentences and format it as :
+        Given below is a text draft for a presentation slide containing {point_count} points , extract the {point_count} sentences and format it as :
                     
         << "point1" | "point2" | "point3" | ... | >>
                     
