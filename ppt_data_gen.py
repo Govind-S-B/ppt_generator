@@ -78,7 +78,7 @@ from langchain.llms import Ollama
 from langchain.prompts import PromptTemplate
 
 llm = Ollama(model="dolphin2.1-mistral",
-             temperature="0.6")
+             temperature="0.4")
 
 # llm_low_temp = Ollama(model="dolphin2.1-mistral",
 #                       temperature="0")
@@ -125,7 +125,7 @@ example :
 slide_data.append(extract_items(llm(f"""
 You are a text summarization and formatting specialized model that fetches relevant information
           
-For the presentation titles "{slide_data[0][0]}" and with subtitle "{slide_data[0][1]}" for the topic "{topic}"
+For the presentation titled "{slide_data[0][0]}" and with subtitle "{slide_data[0][1]}" for the topic "{topic}"
 Write a table of contents containing the title of each slide for a 7 slide presentation
 It should be of the format :
 << "slide1" | "slide2" | "slide3" | ... | >>
@@ -135,17 +135,29 @@ example :
           """)))
 
 for subtopic in slide_data[1]:
-    print((llm(f"""
-You are a text summarization and formatting specialized model that fetches relevant information
-          
-For the presentation titles "{slide_data[0][0]}" and with subtitle "{slide_data[0][1]}" for the topic "{topic}"
-Write the contents for a slide with the subtopic {subtopic}
-Make the points short , concise and to the point . Please expand the points also , each slide should contain 5 points , which are 10 words maximum
 
-It should be of the format :
-<< "point1" | "point2" | "point3" | ... | >>
+    data_to_clean = llm(f"""
+You are a content generation specialized model that fetches relevant information and presents it in clear concise manner
           
+For the presentation titled "{slide_data[0][0]}" and with subtitle "{slide_data[0][1]}" for the topic "{topic}"
+Write the contents for a slide with the subtopic {subtopic}
+Write 5 points. Each point 10 words maximum.
+Make the points short, concise and to the point.
+""")
+
+    cleaned_data = llm(f"""
+You are a text summarization and formatting specialized model that fetches relevant information and formats it into user specified formats
+Given below is a text draft for a presentation slide containing 5 points , extract the 5 sentences and format it as :
+              
+<< "point1" | "point2" | "point3" | ... | >>
+              
 example :
 << "Foster a collaborative and inclusive work environment." | "Respect intellectual property rights and avoid plagiarism." | "Uphold professional standards and codes of ethics." | "Be open to feedback and continuous learning." >>
-          """)))
-    print()
+
+-- Beginning of the text --
+{data_to_clean}
+-- End of the text --         
+    """)
+
+    print(subtopic)
+    print(extract_items(cleaned_data))
