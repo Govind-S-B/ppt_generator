@@ -26,7 +26,7 @@ def slide_data_gen(topic):
 
     slide_data = []
 
-    point_count = 3
+    point_count = 5
 
     slide_data.append(extract_items(llm(f"""
     You are a text summarization and formatting specialized model that fetches relevant information

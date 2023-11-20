@@ -2,6 +2,8 @@ from pptx import Presentation
 from pptx.util import Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN
+from pptx.enum.text import MSO_AUTO_SIZE
+
 import re
 
 
@@ -47,24 +49,26 @@ def ppt_gen(slide_data):
         255, 255, 255)
     for content in slide_data[1][1:]:
         tframe = curr_slide.shapes.placeholders[1].text_frame
+        tframe.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
         para = tframe.add_paragraph()
         para.text = content
         para.level = 1
-        para.runs[0].font.color.rgb = RGBColor(
+        para.font.color.rgb = RGBColor(
             255, 255, 255)
 
     # Content Slides
     for curr_slide_data in slide_data[2:]:
         curr_slide = ppt.slides.add_slide(ppt.slide_layouts[1])
         curr_slide.shapes.title.text = curr_slide_data[0]
-        curr_slide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
+        curr_slide.shapes.title.text_frame.paragraphs[0].font.color.rgb = RGBColor(
             255, 255, 255)
         for content in curr_slide_data[1:]:
             tframe = curr_slide.shapes.placeholders[1].text_frame
+            tframe.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
             para = tframe.add_paragraph()
             para.text = content
             para.level = 1
-            para.runs[0].font.color.rgb = RGBColor(
+            para.font.color.rgb = RGBColor(
                 255, 255, 255)
 
     # Thank You Screen
