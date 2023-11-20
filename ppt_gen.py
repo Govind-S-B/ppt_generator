@@ -37,18 +37,21 @@ def ppt_gen(slide_data):
     # Title Screen
     curr_slide = ppt.slides.add_slide(ppt.slide_layouts[0])
     curr_slide.shapes.title.text = slide_data[0][0]
+    curr_slide.shapes.title.text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
     curr_slide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
         255, 255, 255)
     curr_slide.shapes.placeholders[1].text = slide_data[0][1]
+    curr_slide.shapes.placeholders[1].text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
     curr_slide.shapes.placeholders[1].text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
         255, 255, 255)
 
     # Overview
     curr_slide = ppt.slides.add_slide(ppt.slide_layouts[1])
-    curr_slide.shapes.title.text = slide_data[1][0]
+    curr_slide.shapes.title.text = "Overview"
+    curr_slide.shapes.title.text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
     curr_slide.shapes.title.text_frame.paragraphs[0].runs[0].font.color.rgb = RGBColor(
         255, 255, 255)
-    for content in slide_data[1][1:]:
+    for content in slide_data[1]:
         tframe = curr_slide.shapes.placeholders[1].text_frame
         tframe.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
         para = tframe.add_paragraph()
@@ -61,6 +64,7 @@ def ppt_gen(slide_data):
     for curr_slide_data in slide_data[2:]:
         curr_slide = ppt.slides.add_slide(ppt.slide_layouts[1])
         curr_slide.shapes.title.text = curr_slide_data[0]
+        curr_slide.shapes.title.text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
         curr_slide.shapes.title.text_frame.paragraphs[0].font.color.rgb = RGBColor(
             255, 255, 255)
         for content in curr_slide_data[1:]:
