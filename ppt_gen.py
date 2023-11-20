@@ -5,6 +5,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.enum.text import MSO_AUTO_SIZE
 
 import re
+import io
 
 
 def sanitize_string(input_str):
@@ -81,4 +82,9 @@ def ppt_gen(slide_data):
         96)
     curr_slide.shapes.placeholders[1].text_frame.paragraphs[0].alignment = PP_ALIGN.CENTER
 
-    ppt.save(f"{sanitize_string(slide_data[0][0])}.pptx")
+    # f"{sanitize_string(slide_data[0][0])}.pptx"
+    ppt_stream = io.BytesIO()
+    ppt.save(ppt_stream)
+    ppt_stream.seek(0)
+
+    return ppt_stream
