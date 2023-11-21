@@ -2,6 +2,7 @@ import streamlit as st
 from ppt_data_gen import slide_data_gen
 from ppt_gen import ppt_gen
 
+st.title("PPT Generator")
 
 topic = st.text_input("Enter a topic:")
 

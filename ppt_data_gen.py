@@ -47,8 +47,8 @@ def slide_data_gen(topic):
     << "slide1" | "slide2" | "slide3" | ... | >>
             
     example :
-    << "Introduction" | "User-Centered Design" | "Transparency and Honesty" | "Data Privacy and Security" | "Accessibility and Inclusion" | "Social Impact and Sustainability" | "Ethical AI and Automation" | "Collaboration and Professional Ethics" >>          
-            """)))
+    << "Introduction to Design Ethics" | "User-Centered Design" | "Transparency and Honesty" | "Data Privacy and Security" | "Accessibility and Inclusion" | "Social Impact and Sustainability" | "Ethical AI and Automation" | "Collaboration and Professional Ethics" >>          
+    """)))
 
     for subtopic in slide_data[1]:
 
@@ -59,7 +59,7 @@ def slide_data_gen(topic):
         Write the contents for a slide with the subtopic {subtopic}
         Write {point_count} points. Each point 10 words maximum.
         Make the points short, concise and to the point.
-            """)
+        """)
 
         cleaned_data = llm(f"""
         You are a text summarization and formatting specialized model that fetches relevant information and formats it into user specified formats
@@ -73,7 +73,7 @@ def slide_data_gen(topic):
         -- Beginning of the text --
         {data_to_clean}
         -- End of the text --         
-                """)
+        """)
 
         slide_data.append([subtopic] + extract_items(cleaned_data))
 
